@@ -1,0 +1,17 @@
+{
+  "kategorie": {
+    "vsechnykategorie": [
+      "Všechny kategorie"
+    ],
+    "zahrada": [
+      "Sekání",
+      "Zalévání",
+      "Ošetřování květin"
+    ],
+    "domacnost": [
+      "Uklizení",
+      "Hlídání",
+      "Všeobecná pomoc"
+    ]
+  }
+}
