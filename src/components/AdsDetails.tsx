@@ -88,7 +88,7 @@ function AdsDetails({ad}: IProps) {
                                     padding: '0.5rem', // Added this line
                                 }}
                             >
-                                <Link href={`/detailInzeratu/${ad.id}`}>
+                                <Link href={`/inzeraty/${ad.id}`}>
                                     <ArrowForwardIosRoundedIcon
                                         sx={{
                                             color: 'grey',

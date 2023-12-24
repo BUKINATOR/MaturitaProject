@@ -1,19 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {doc, getDoc} from "@firebase/firestore";
-import DetailAd from '../components/DetailAd';
-import {NewInzeratType} from "@/types/ad";
-import {InzeratySeznamCollection} from "@/firebase/controller";
-import {useParams} from "next/navigation";
+import {doc, getDoc} from '@firebase/firestore';
+import DetailAd from '../../components/DetailAd';
+import {NewInzeratType} from '../../types/ad';
+import {InzeratySeznamCollection} from '../../firebase/controller';
+import {useRouter} from 'next/router';
+import Header from '@/components/Header';
 
-
-function DetailAds() {
-    const {id} = useParams();
+function DetailInzeratu() {
+    const router = useRouter();
+    const {id} = router.query;
     const [ad, setAd] = useState<NewInzeratType | null>(null);
 
     useEffect(() => {
         const fetchAd = async () => {
             try {
-                const adDoc = doc(InzeratySeznamCollection /*, id*/);
+                const adDoc = doc(InzeratySeznamCollection, id as string);
                 const adSnapshot = await getDoc(adDoc);
 
                 if (adSnapshot.exists()) {
@@ -34,11 +35,11 @@ function DetailAds() {
 
     return (
         <div className="card">
-            <h2 className="title">Detail Inzerátu</h2>
+            <Header/>
             {ad && <DetailAd ad={ad}/>}
             {!ad && <p>Loading...</p>}
         </div>
     );
 }
 
-export default DetailAds;
+export default DetailInzeratu;

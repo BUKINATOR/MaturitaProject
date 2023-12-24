@@ -1,6 +1,11 @@
 import React from 'react';
 import {NewInzeratType} from '@/types/ad';
 import {Box} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import NotesIcon from '@mui/icons-material/Notes';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 interface IProps {
     ad: NewInzeratType;
@@ -9,19 +14,174 @@ interface IProps {
 function DetailAd({ad}: IProps) {
     console.log(ad, 'inzerat');
     return (
-        <div className="detail-inzerat-view">
-            <Box sx={{backgroundColor: 'white', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '80%'}}>
-                <Box sx={{display: 'flex', flexDirection: 'column', width: '100%', padding: '1rem'}}>
-                    <div className="jmeno">{ad.displayName}</div>
-                    <div className="cena">{`${ad.cena}/h`}</div>
-                    <div className="kategorie">{ad.kategorie}</div>
-                    <div className="rubrika">{ad.rubrika}</div>
-                    <div className="lokace">{ad.lokace}</div>
-                    <div className="phoneNumber">{ad.phoneNumber}</div>
-                    <div className="text">{ad.text}</div>
+        <Box className="detail-inzerat-view" sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '80vh'
+        }}>
+            <Box
+                sx={{
+                    backgroundColor: 'white',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    width: '100%',
+                    maxWidth: '600px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                <Box
+                    className="jmeno"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        borderBottom: '1px solid #ccc',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginRight: '1rem',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '50%',
+                            width: 40,
+                            height: 40,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <PersonIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
+                    </Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.displayName}</Box>
+                </Box>
+
+                <Box
+                    className="cena"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        borderBottom: '1px solid #ccc',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginRight: '1rem',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '50%',
+                            width: 40,
+                            height: 40,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <AttachMoneyIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
+                    </Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{`${ad.cena}/h`}</Box>
+                </Box>
+
+
+                <Box
+                    className="kategorie"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        borderBottom: '1px solid #ccc',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginRight: '1rem',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '50%',
+                            width: 40,
+                            height: 40,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <NotesIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
+                    </Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.kategorie}</Box>
+                </Box>
+
+
+                <Box
+                    className="lokace"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        borderBottom: '1px solid #ccc',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginRight: '1rem',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '50%',
+                            width: 40,
+                            height: 40,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <LocationOnIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
+                    </Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.lokace}</Box>
+                </Box>
+
+                <Box
+                    className="cislo"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        borderBottom: '1px solid #ccc',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginRight: '1rem',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '50%',
+                            width: 40,
+                            height: 40,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <PhoneIphoneIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
+                    </Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.phoneNumber}</Box>
+                </Box>
+
+                <Box className="text" sx={{padding: '1rem', fontWeight: 700, fontSize: 18, display: 'flex'}}>
+                    {ad.text}
                 </Box>
             </Box>
-        </div>
+        </Box>
     );
 }
 
