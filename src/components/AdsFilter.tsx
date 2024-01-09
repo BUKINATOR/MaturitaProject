@@ -76,8 +76,11 @@ function AdsFilter({filter, setFilter}: AdsFilterProps) {
                         alignItems: 'center',
                         backgroundColor: '#F8F8F8',
                         border: 1,
-                        borderRadius: 8,
-                        borderColor: '#51B371'
+                        borderRadius: 12,
+                        borderColor: '#51B371',
+                        '@media (max-width: 690px)': {
+                            flexDirection: 'column'
+                        },
                     }}
                 >
                     <FormControl fullWidth sx={{margin: '0.5rem'}}>

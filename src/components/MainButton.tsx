@@ -22,9 +22,15 @@ export const Mainbutton: FC<Props> = (props) => {
                 marginLeft: "20px",
                 justifyContent: 'space-between',
                 backgroundColor: 'white',
+                '@media (max-width: 690px)': {
+                    margin: 'none',
+                    width: 250,
+                    height: 60,
+                },
+
 
             }}>
-                <Typography sx={{marginLeft: 2, color:'#A2A2A2'}}>{content}</Typography>
+                <Typography sx={{marginLeft: 2, color: '#A2A2A2'}}>{content}</Typography>
                 <Button variant="contained" sx={{
                     boxShadow: 0,
                     marginRight: 2,
@@ -33,6 +39,10 @@ export const Mainbutton: FC<Props> = (props) => {
                     display: 'flex',
                     backgroundColor: '#51B371',
                     color: 'white',
+                    '&:hover': {
+                        backgroundColor: '#3F8C5D',
+                    },
+
                 }}>Pokračovat
                 </Button>
             </Box>

@@ -9,7 +9,6 @@ const index: React.FC = () => {
             <Header/>
             <MainPage/>
         </>
-
     )
 }
 

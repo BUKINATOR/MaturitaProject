@@ -116,7 +116,7 @@ export default function CreateAd() {
                                     <em>Vyberte rubriku</em>
                                 </MenuItem>
                                 <MenuItem value="zahrada">Zahrada</MenuItem>
-                                <MenuItem value="dum">Domácnost</MenuItem>
+                                <MenuItem value="domacnost">Domácnost</MenuItem>
                             </Select>
                         </Grid>
                         <Grid item xs={6}>

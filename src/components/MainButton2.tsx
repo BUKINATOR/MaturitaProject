@@ -33,6 +33,9 @@ export const Mainbutton2: FC<Props> = (props) => {
                     display: 'flex',
                     backgroundColor: '#51B371',
                     color: 'white',
+                    '&:hover': {
+                        backgroundColor: '#3F8C5D',
+                    },
                 }}>Pokračovat
                 </Button>
             </Box>

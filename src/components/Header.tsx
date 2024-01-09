@@ -34,7 +34,7 @@ function Header() {
             <AppBar position="static" sx={{backgroundColor: 'white'}}>
                 <Toolbar>
                     <Box component="div" sx={{flexGrow: 1}}>
-                        <img src="logo.png" alt="logo" style={{maxWidth: '100%', height: 'auto'}}/>
+                        <img src="/logo.png" alt="logo" style={{maxWidth: '100%', height: 'auto'}}/>
                     </Box>
                     {user ? (
                         <div>
@@ -72,7 +72,7 @@ function Header() {
                                         onClose={handleClose}
                                     >
                                         <MenuItem sx={{color: 'black'}}>
-                                            <Link href="/profil">Profil</Link>
+                                            <Link href="/profile">Profil</Link>
                                         </MenuItem>
                                         <MenuItem onClick={() => signOut()}>
                                             Odhlásit se

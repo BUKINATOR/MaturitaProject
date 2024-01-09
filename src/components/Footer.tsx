@@ -9,8 +9,11 @@ import Typography from "@mui/material/Typography";
 function Footer() {
     return (
         <>
-
-            <Box className="footer" sx={{display: 'flex', justifyContent: 'center', marginTop: '23.3rem'}}>
+            <Box className="footer" sx={{
+                display: 'flex', justifyContent: 'center', marginTop: '23.3rem', '@media (max-width: 1800px)': {
+                    marginTop: 10
+                },
+            }}>
                 <Box
                     sx={{
                         width: '100%',
@@ -24,12 +27,20 @@ function Footer() {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        '@media (max-width: 490px)': {
+                            flexDirection: 'column', alignItems: 'center'
+                        },
                     }}>
                         <Box className="logo">
-                            <img src="biggerLogo.png" alt="logo" style={{margin: '1rem'}}/>
+                            <img src="/biggerLogo.png" alt="logo" style={{margin: '1rem'}}/>
                         </Box>
                         <Box className="icons"
-                             sx={{display: 'flex', flexDirection: 'row', color: '#51B371', marginRight: '10px'}}>
+                             sx={{
+                                 display: 'flex',
+                                 flexDirection: 'row',
+                                 color: '#51B371',
+                                 marginRight: '10px',
+                             }}>
                             <InstagramIcon style={{width: '35px', height: '35px', marginRight: '20px'}}/>
                             <YouTubeIcon style={{width: '35px', height: '35px', marginRight: '20px'}}/>
                             <TwitterIcon style={{width: '35px', height: '35px', marginRight: '20px'}}/>
