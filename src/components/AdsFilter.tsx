@@ -13,7 +13,6 @@ import kategorieData from '../json/kategorie.json'; // Nový import kategorií
 interface AdsFilterProps {
     filter: { categories: string; location: string; priceFrom: string; priceTo: string };
     setFilter: (value: any) => void;
-    handleFilter: () => void;
 }
 
 function AdsFilter({filter, setFilter}: AdsFilterProps) {

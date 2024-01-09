@@ -39,7 +39,7 @@ function Header() {
                     {user ? (
                         <div>
                             <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                                <Link href="mojeinzeraty" underline="hover"
+                                <Link href="myads" underline="hover"
                                       sx={{display: 'flex', color: 'black', justifyContent: 'end', padding: 2}}>
                                     {'Moje Inzeráty'}
                                 </Link>

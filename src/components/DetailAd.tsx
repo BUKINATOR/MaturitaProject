@@ -1,5 +1,5 @@
 import React from 'react';
-import {NewInzeratType} from '@/types/ad';
+import {Ad} from '@/types/Ad';
 import {Box} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -7,12 +7,12 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
-interface IProps {
-    ad: NewInzeratType;
+interface Props {
+    ad: Ad
 }
 
-function DetailAd({ad}: IProps) {
-    console.log(ad, 'inzerat');
+function DetailAd(props: Props) {
+    console.log(props.ad, 'inzerat');
     return (
         <Box className="detail-inzerat-view" sx={{
             display: 'flex',
@@ -56,7 +56,7 @@ function DetailAd({ad}: IProps) {
                     >
                         <PersonIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
                     </Box>
-                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.displayName}</Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{props.ad.user.displayName}</Box>
                 </Box>
 
                 <Box
@@ -85,7 +85,7 @@ function DetailAd({ad}: IProps) {
                     >
                         <AttachMoneyIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
                     </Box>
-                    <Box sx={{fontWeight: 700, fontSize: 18}}>{`${ad.cena}/h`}</Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{`${props.ad.salary}/h`}</Box>
                 </Box>
 
 
@@ -115,7 +115,7 @@ function DetailAd({ad}: IProps) {
                     >
                         <NotesIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
                     </Box>
-                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.kategorie}</Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{props.ad.category}</Box>
                 </Box>
 
 
@@ -145,7 +145,7 @@ function DetailAd({ad}: IProps) {
                     >
                         <LocationOnIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
                     </Box>
-                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.lokace}</Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{props.ad.location}</Box>
                 </Box>
 
                 <Box
@@ -174,11 +174,11 @@ function DetailAd({ad}: IProps) {
                     >
                         <PhoneIphoneIcon sx={{width: 35, height: 35, color: '#51B371'}}/>
                     </Box>
-                    <Box sx={{fontWeight: 700, fontSize: 18}}>{ad.phoneNumber}</Box>
+                    <Box sx={{fontWeight: 700, fontSize: 18}}>{props.ad.phoneNumber}</Box>
                 </Box>
 
                 <Box className="text" sx={{padding: '1rem', fontWeight: 700, fontSize: 18, display: 'flex'}}>
-                    {ad.text}
+                    {props.ad.text}
                 </Box>
             </Box>
         </Box>

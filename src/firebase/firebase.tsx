@@ -4,14 +4,14 @@ import {getStorage} from "firebase/storage";
 import {getFirestore} from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDMl8XiGnIq46H_a_h64uwO89Y8kNRrT00",
-    authDomain: "hodinovy-syn.firebaseapp.com",
-    databaseURL: "https://hodinovy-syn-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "hodinovy-syn",
-    storageBucket: "hodinovy-syn.appspot.com",
-    messagingSenderId: "650676154485",
-    appId: "1:650676154485:web:4b1dca8bbeedc2e5f6c83c",
-    measurementId: "G-YN1L6FFWZ4"
+    apiKey: process.env.FIREBASE_CONFIG_apiKey,
+    authDomain: process.env.FIREBASE_CONFIG_authDomain,
+    databaseURL: process.env.FIREBASE_CONFIG_databaseURL,
+    projectId: process.env.FIREBASE_CONFIG_projectId,
+    storageBucket: process.env.FIREBASE_CONFIG_storageBucket,
+    messagingSenderId: process.env.FIREBASE_CONFIG_messagingSenderId,
+    appId: process.env.FIREBASE_CONFIG_appId,
+    measurementId: process.env.FIREBASE_CONFIG_measurementId,
 };
 
 const app = initializeApp(firebaseConfig);

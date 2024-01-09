@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
 import Profil from "../components/Profile";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {Box, Divider, Link, Rating, Typography} from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import AddIcon from "@mui/icons-material/Add";
+import ModalProfile from "@/components/ModalProfile";
 
 
 const Inzeraty = () => {
