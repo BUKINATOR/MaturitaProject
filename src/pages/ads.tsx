@@ -1,16 +1,22 @@
 import React, {useEffect, useState} from "react";
 import Header from "../components/Header";
 import {getSession} from "next-auth/react";
-import {getAllAds, getUserByID, InzeratySeznamCollection} from "@/firebase/controller";
+import {getAllAds, getUserByID} from "@/firebase/controller";
 import {DocumentData, getDocs, onSnapshot, query, QuerySnapshot, where} from "@firebase/firestore";
 import AdsFilter from "@/components/AdsFilter";
+import { GetServerSidePropsContext } from 'next';
 import {Grid} from "@mui/material";
 import AdsDetails from "@/components/AdsDetails";
 import Ad from "@/types/Ad";
+import Box from "@mui/material/Box";
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
     let ads = await getAllAds()
     let fullads = await Promise.all(ads.map(async (a) => {
+        if (a.userId === null) {
+            // Handle the case where userId is null
+            return {...a, user: null};
+        }
         return {...a, user: await getUserByID(a.userId)}
     }));
     return {props: {ads: fullads}};
@@ -25,7 +31,7 @@ const Ads = (props: AdsProps) => {
     const [filter, setFilter] = useState({categories: "", location: "", priceFrom: "", priceTo: ""});
 
     const handleFilter = (newFilter: any) => {
-        let newlist = []
+        let newlist : Ad[] = []
         props.ads.forEach((ad) => {
             if ((newFilter.categories != "" ? (ad.category == newFilter.categories) : true) &&
                 (newFilter.location != "" ? (ad.location == newFilter.location) : true) &&
@@ -38,7 +44,7 @@ const Ads = (props: AdsProps) => {
     };
 
     return (
-        <div className="card">
+        <Box className="card">
             <AdsFilter filter={filter} setFilter={handleFilter}/>
             <Grid container spacing={3} sx={{
                 paddingLeft: '35rem', paddingRight: '35rem', '@media (max-width: 2300px)': {
@@ -61,9 +67,38 @@ const Ads = (props: AdsProps) => {
                 }
             </Grid>
             {inzeratyseznam.length === 0 && (
-                <h2 className="zadny inzerat">Nejsou tu žádné inzeráty, první je tvůj</h2>
+                <h2 className="zadny inzerat">Nejsou tu žádné inzeráty, první je tvůj!</h2>
             )}
-        </div>
+            <Box
+                component="div"
+                sx={{
+                    position: "absolute",
+                    zIndex: -1,
+                    bottom: 0,
+                    right: 0,
+                    "@media (max-width: 1500px)": {
+                        display: "none",
+                    },
+                }}
+            >
+                <img src="Ads_BG.jpg" alt="logo" style={{width: "100%"}}/>
+            </Box>
+            <Box
+                component="div"
+                sx={{
+                    position: "absolute",
+                    zIndex: -1,
+                    bottom: 0,
+                    left: 0,
+                    "@media (max-width: 1500px)": {
+                        display: "none",
+                    },
+                }}
+            >
+                <img src="Ads_BG_03.jpg" alt="logo" style={{width: "100%"}}/>
+            </Box>
+
+        </Box>
     );
 }
 

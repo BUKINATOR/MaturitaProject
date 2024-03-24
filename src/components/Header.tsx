@@ -15,7 +15,7 @@ function Header() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const {data: session, status} = useSession()
-    let [user, setUser] = useState(null)
+    let [user, setUser] = useState<{ name?: string | null; email?: string | null; image?: string | null; } | undefined>(undefined)
     useEffect(() => {
         if (status === "authenticated")
             setUser(session.user);
@@ -34,7 +34,9 @@ function Header() {
             <AppBar position="static" sx={{backgroundColor: 'white'}}>
                 <Toolbar>
                     <Box component="div" sx={{flexGrow: 1}}>
-                        <img src="/logo.png" alt="logo" style={{maxWidth: '100%', height: 'auto'}}/>
+                        <Link href='/'>
+                            <img src="/logo.png" alt="logo" style={{maxWidth: '100%', height: 'auto'}}/>
+                        </Link>
                     </Box>
                     {user ? (
                         <div>
@@ -71,8 +73,15 @@ function Header() {
                                         open={Boolean(anchorEl)}
                                         onClose={handleClose}
                                     >
-                                        <MenuItem sx={{color: 'black'}}>
-                                            <Link href="/profile">Profil</Link>
+                                        <MenuItem>
+                                            <Link sx={{color: 'black'}} underline="hover" href="/profile">Profil</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link sx={{color: 'black'}} underline="hover" href="/ad/create">Vytvořit
+                                                inzerát</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link sx={{color: 'black'}} underline="hover" href="/ads">Inzeráty</Link>
                                         </MenuItem>
                                         <MenuItem onClick={() => signOut()}>
                                             Odhlásit se

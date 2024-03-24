@@ -1,5 +1,5 @@
 import React from 'react';
-import {Ad} from '@/types/Ad';
+import Ad from '../types/Ad';
 import {Box} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import NotesIcon from '@mui/icons-material/Notes';

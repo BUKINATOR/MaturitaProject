@@ -1,31 +1,29 @@
 import React, {useEffect, useState} from "react";
-import Header from "../components/Header";
-import Profil from "../components/Profile";
-import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import {Box, Divider, Link, Rating, Typography} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
 import ModalProfile from "@/components/ModalProfile";
+import {getAdByID, getUserByID} from "@/firebase/controller";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import {GetServerSidePropsContext} from 'next';
+import {User} from "firebase/auth";
 
 
-const Inzeraty = () => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    let session = await getServerSession(context.req, context.res, {
+        ...authOptions,
+        session: undefined
+    });
+    let user = await getUserByID(session.user.id);
+    return {props: {user}}
+}
+
+const Inzeraty = ({user}: {
+    user: User
+}) => {
     const [isModalOpen, setModalOpen] = useState(false);
-    const [user, setUser] = useState(null);
-    const {data: session, status} = useSession();
     const [enteredText, setEnteredText] = useState('');
-
-    useEffect(() => {
-        const fetchUserData = () => {
-            // Check if there is an active session and user data
-            if (session?.user) {
-                setUser(session.user);
-                console.log(session.user);
-            }
-        };
-
-        fetchUserData();
-    }, [session]);
 
     const handleAddIconClick = () => {
         setModalOpen(true);
@@ -42,8 +40,8 @@ const Inzeraty = () => {
 
     return (
         <>
-            <Typography variant="h4" sx={{display: 'flex', marginLeft: '6rem'}}>
-                Vítej na svém účtu {user && user.name}
+            <Typography variant="h2" sx={{display: 'flex', marginLeft: '6rem', fontFamily: 'Bebas Neue'}}>
+                Vítej na svém účtu {user && user.displayName}
             </Typography>
             <Box sx={{
                 display: 'flex',
@@ -91,7 +89,7 @@ const Inzeraty = () => {
 
                             <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                 <Typography variant="subtitle1"
-                                            sx={{mt: 1, fontWeight: 'bold'}}>{user && user.name}</Typography>
+                                            sx={{mt: 1, fontWeight: 'bold'}}>{user && user.displayName}</Typography>
                                 <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly/>
                             </Box>
                         </Box>

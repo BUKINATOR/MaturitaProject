@@ -1,3 +1,4 @@
+/*
 import React, {FormEvent, useState} from 'react';
 import {Button, Container, Grid, Link, TextField, Typography} from "@mui/material";
 import {authUtils} from "@/firebase/authUtils";
@@ -87,4 +88,4 @@ function Register() {
     )
 }
 
-export default Register;
+export default Register;*/

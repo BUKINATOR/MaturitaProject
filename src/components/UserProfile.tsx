@@ -1,42 +1,19 @@
 // UserProfile.tsx
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { Box, Divider, Link, Rating, Typography } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {Box, Divider, Link, Rating, Typography} from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ModalProfile from './ModalProfile';
-import { useSession } from 'next-auth/react';
+import {useSession} from 'next-auth/react';
 
-const UserProfile = ({ userId }) => {
-    const [userData, setUserData] = useState(null);
+type User = {
+    displayName: string;
+};
+const UserProfile = ({user}: { user: User }) => {
     const [isModalOpen, setModalOpen] = useState(false);
-    const { data: session, status } = useSession();
+    const {data: session, status} = useSession();
     const router = useRouter();
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                // Check if there is an active session and user data
-                if (session?.user) {
-                    const fetchedUserData = await fetch(`/api/users/${userId}`);
-                    const userData = await fetchedUserData.json();
-                    setUserData(userData);
-                } else {
-                    // If there is no active session, redirect to the home page
-                    router.push('/');
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        if (userId && status === 'authenticated') {
-            fetchUserData();
-        } else {
-            // If there is no userId or the user is not authenticated, redirect to the home page
-            router.push('/');
-        }
-    }, [userId, session, status, router]);
 
     const handleAddIconClick = () => {
         setModalOpen(true);
@@ -51,17 +28,12 @@ const UserProfile = ({ userId }) => {
         console.log('Text saved:', text);
     };
 
-    if (!userData) {
-        return <p>Loading...</p>;
-    }
-
     return (
         <>
-            <Typography variant="h4" sx={{ display: 'flex', marginLeft: '6rem' }}>
-                Vítej na profilu uživatele {userData.name}
+            <Typography variant="h2" sx={{display: 'flex', marginLeft: '6rem', fontFamily: 'Bebas Neue'}}>
+                Vítej na účtu {user.displayName}
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                {/* ... Zde můžete pokračovat v zobrazování informací o uživateli */}
+            <Box sx={{display: 'flex', flexDirection: 'row'}}>
                 <Box
                     sx={{
                         display: 'flex',
@@ -69,15 +41,102 @@ const UserProfile = ({ userId }) => {
                         height: '100%',
                         justifyContent: 'start',
                         alignItems: 'center',
+                        flexDirection: 'row'
                     }}
                 >
-                    {/* ... Zde můžete pokračovat ve zobrazení informací o uživateli */}
+                    <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                        <Box className='whiteBox'
+                             sx={{
+                                 width: '361px',
+                                 height: '100px',
+                                 backgroundColor: '#fff',
+                                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                 display: 'flex',
+                                 alignItems: 'center',
+                                 justifyContent: 'center'
+                             }}
+                        >
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'start',
+                                alignItems: 'center',
+                            }}>
+                                <Box sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    backgroundColor: 'white',
+                                    marginRight: '1rem',
+                                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                                    borderRadius: '50%',
+                                    width: 60,
+                                    height: 60
+                                }}>
+                                    <PersonIcon sx={{width: 50, height: 50, color: 'grey'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                                    <Typography variant="subtitle1"
+                                                sx={{fontWeight: 'bold'}}>{user && user.displayName}</Typography>
+                                    <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly/>
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box className="Omne"
+                             sx={{
+                                 width: '361px',
+                                 height: '230px',
+                                 backgroundColor: '#F8F8F8',
+                                 marginTop: '1rem'
+                             }}
+                        >
+                            <Box sx={{display: 'flex', width: '100%', marginLeft: '1rem', marginTop: '0.5rem'}}>
+                                <Typography variant="h6" sx={{color: '#707070'}}>O mně</Typography>
+                            </Box>
+                        </Box>
+                        <Box className="Dovednosti"
+                             sx={{
+                                 width: '361px',
+                                 height: '230px',
+                                 backgroundColor: '#F8F8F8',
+                                 marginTop: '1rem'
+                             }}
+                        >
+                            <Box sx={{display: 'flex', width: '100%', marginLeft: '1rem', marginTop: '0.5rem'}}>
+                                <Typography variant="h6" sx={{color: '#707070'}}>Dovednosti</Typography>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box className="Recenze"
+                         sx={{
+                             width: '400px',
+                             height: '590px',
+                             backgroundColor: '#F8F8F8',
+                             marginLeft: '1rem'
+                         }}
+                    >
+                        <Box sx={{display: 'flex', width: '100%', marginLeft: '1rem', marginTop: '0.5rem'}}>
+                            <Typography variant="h6" sx={{color: '#707070'}}>Recenze</Typography>
+                        </Box>
+                    </Box>
+                    <Box className="Inzeráty"
+                         sx={{
+                             width: '400px',
+                             height: '590px',
+                             backgroundColor: '#F8F8F8',
+                             marginLeft: '1rem'
+                         }}
+                    >
+                        <Box sx={{display: 'flex', width: '100%', marginLeft: '1rem', marginTop: '0.5rem'}}>
+                            <Typography variant="h6" sx={{color: '#707070'}}>Inzeráty</Typography>
+                        </Box>
+                    </Box>
                 </Box>
-                <ModalProfile
-                    isOpen={isModalOpen}
-                    onClose={handleModalClose}
-                    onSave={handleSaveText}
-                />
+                <Box component="div" sx={{position: 'absolute', zIndex: -1, right: 0, bottom: 0}}>
+                    <img src="/Image 15.png" alt="logo"/>
+                </Box>
+
             </Box>
         </>
     );

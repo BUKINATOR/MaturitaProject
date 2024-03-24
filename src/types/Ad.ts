@@ -1,4 +1,5 @@
 export default interface Ad {
+    user: any; //pridano kvuli buildu
     id: string,
     category: string,
     location: string,
@@ -6,5 +7,5 @@ export default interface Ad {
     salary: number,
     section: string,
     text: string,
-    userId: string,
+    userId: string | null,
 }

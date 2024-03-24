@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import {getUserByID, getCredentials} from "@/firebase/controller";
 import {createHash} from "crypto";
 
+
 export const authOptions = {
     providers: [
         CredentialsProvider({

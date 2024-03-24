@@ -9,8 +9,6 @@ import {
     QuerySnapshot,
     DocumentData
 } from '@firebase/firestore';
-import {InzeratySeznamCollection} from '../firebase/controller';
-import {NewInzeratType} from '../types/ad';
 import Information from './AdsDetails';
 import {authUtils} from '../firebase/authUtils';
 import {useSession} from "next-auth/react";

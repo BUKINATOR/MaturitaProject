@@ -35,7 +35,7 @@ const index: React.FC = () => {
                     },
                 }}
             >
-                "NAJDI SI BRIGÁDNÍKA SVÝCH SNŮ"
+                &quot;NAJDI SI BRIGÁDNÍKA SVÝCH SNŮ&quot;
             </Typography>
 
             <Box sx={{

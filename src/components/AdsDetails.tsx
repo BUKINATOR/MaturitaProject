@@ -1,5 +1,5 @@
 import React from 'react';
-import Ad, {NewInzeratType} from '../types/ad';
+import Ad from '../types/Ad';
 import {Box, Rating} from '@mui/material';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';  // Přidána ikona chatu
@@ -13,6 +13,7 @@ interface Props {
     showDeleteIcon?: boolean;
     handleDelete?: () => void;
 }
+
 
 function AdsDetails({ad, showDeleteIcon = false, handleDelete}: Props) {
     const router = useRouter();

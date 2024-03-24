@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
-import CreateAd from '../components/CreateAd';
-import Header from "../components/Header";
 import {useSession} from "next-auth/react";
-import kategorieData from "@/json/kategorie.json";
-import {Box, Button, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
-import lokaceData from "@/json/lokace.json";
 
 const VytvoreniInzeratu: React.FC = () => {
     const {data: session, status} = useSession()
 
-    let [sessionStatus, setSessionStatus] = useState(session)
+    let [sessionData, setSessionData] = useState(session)
+    let [sessionStatus, setSessionStatus] = useState(status)
+
     useEffect(() => {
-        sessionStatus = status
-    }, [session])
+        setSessionData(session)
+        setSessionStatus(status)
+    }, [session, status])
 
-
+    return null;
 };
 
 export default VytvoreniInzeratu;

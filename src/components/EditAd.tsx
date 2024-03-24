@@ -1,12 +1,23 @@
 import React, {useEffect, useState} from "react";
 import kategorieData from "@/json/kategorie.json";
-import {Box, Button, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
+import {
+    Box,
+    Button,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    TextField
+} from "@mui/material";
 import lokaceData from "@/json/lokace.json";
 import Ad from "@/types/Ad";
 
 type RubrikaOptions = {
     [key: string]: string[];
 };
+
 interface Props {
     ad: Ad,
     change: (ad: Ad) => void,
@@ -61,53 +72,64 @@ export default function EditAd(props: Props) {
                 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Select
-                                name="rubrika"
-                                required
-                                value={rubrika}
-                                onChange={(e) => handleRubrikaChange(e)}
-                                fullWidth
-                                sx={{
-                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
-                                    '.MuiOutlinedInput-notchedOutline': {border: 0},
-                                    borderRadius: '0', // Set border-radius to 0 for sharp edges
-                                }}
-                            >
-                                <MenuItem value="">
-                                    <em>Vyberte rubriku</em>
-                                </MenuItem>
-                                <MenuItem value="zahrada">Zahrada</MenuItem>
-                                <MenuItem value="domacnost">Domácnost</MenuItem>
-                            </Select>
+                            <FormControl fullWidth>
+                                <InputLabel id="rubrika">Rubrika</InputLabel>
+                                <Select
+                                    name="rubrika"
+                                    required
+                                    labelId="rubrika"
+                                    id="rubrika"
+                                    value={rubrika}
+                                    label="Rubrika" onChange={(e) => handleRubrikaChange(e)}
+                                    fullWidth
+                                    sx={{
+                                        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
+                                        '.MuiOutlinedInput-notchedOutline': {border: 0},
+                                        borderRadius: '0', // Set border-radius to 0 for sharp edges
+                                    }}
+                                >
+                                    <MenuItem value="">
+                                        <em>Vyberte rubriku</em>
+                                    </MenuItem>
+                                    <MenuItem value="zahrada">Zahrada</MenuItem>
+                                    <MenuItem value="domacnost">Domácnost</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={6}>
-                            <Select
-                                name="kategorie"
-                                required
-                                value={kategorie}
-                                onChange={(e) => setKategorie(e.target.value as string)}
-                                fullWidth
-                                sx={{
-                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
-                                    '.MuiOutlinedInput-notchedOutline': {border: 0},
-                                    borderRadius: '0', // Set border-radius to 0 for sharp edges
-                                }}
-                            >
-                                <MenuItem value="">
-                                    <em>Vyberte kategorii</em>
-                                </MenuItem>
-                                {rubrikaOptions[rubrika]?.map((kat) => (
-                                    <MenuItem key={kat} value={kat}>
-                                        {kat}
+                            <FormControl fullWidth>
+                                <InputLabel id="kategorie">Kategorie</InputLabel>
+                                <Select
+                                    name="kategorie"
+                                    required
+                                    labelId="kategorie"
+                                    id="kategorie"
+                                    value={kategorie}
+                                    label="Kategorie"
+                                    onChange={(e) => setKategorie(e.target.value as string)}
+                                    fullWidth
+                                    sx={{
+                                        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
+                                        '.MuiOutlinedInput-notchedOutline': {border: 0},
+                                        borderRadius: '0', // Set border-radius to 0 for sharp edges
+                                    }}
+                                >
+                                    <MenuItem value="">
+                                        <em>Vyberte kategorii</em>
                                     </MenuItem>
-                                ))}
-                            </Select>
+                                    {rubrikaOptions[rubrika]?.map((kat) => (
+                                        <MenuItem key={kat} value={kat}>
+                                            {kat}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 type="number"
                                 label="Cena"
-                                value={cena}
+                                value={cena === 0 ? '' : cena}
                                 onChange={(e) => setCena(Number(e.target.value))}
                                 fullWidth
                                 InputProps={{
@@ -120,27 +142,34 @@ export default function EditAd(props: Props) {
                             />
                         </Grid>
                         <Grid item xs={6}>
-                            <Select
-                                name="lokace"
-                                required
-                                value={lokace}
-                                onChange={(e) => setLokace(e.target.value as string)}
-                                fullWidth
-                                sx={{
-                                    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
-                                    '.MuiOutlinedInput-notchedOutline': {border: 0},
-                                    borderRadius: '0', // Set border-radius to 0 for sharp edges
-                                }}
-                            >
-                                <MenuItem value="">
-                                    <em>Vyberte lokalitu</em>
-                                </MenuItem>
-                                {lokaceData.lokace.map((lokaceItem) => (
-                                    <MenuItem key={lokaceItem} value={lokaceItem}>
-                                        {lokaceItem}
+                            <FormControl fullWidth>
+                                <InputLabel id="lokace">Lokace</InputLabel>
+                                <Select
+                                    labelId="lokace"
+                                    id="lokace"
+                                    name="lokace"
+                                    required
+                                    value={lokace}
+                                    label="Lokace"
+                                    onChange={(e) => setLokace(e.target.value as string)}
+                                    fullWidth
+                                    sx={{
+                                        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
+                                        '.MuiOutlinedInput-notchedOutline': {border: 0},
+                                        borderRadius: '0', // Set border-radius to 0 for sharp edges,
+                                        backdropFilter: "blur(5px)"
+                                    }}
+                                >
+                                    <MenuItem value="">
+                                        <em>Vyberte lokalitu</em>
                                     </MenuItem>
-                                ))}
-                            </Select>
+                                    {lokaceData.lokace.map((lokaceItem) => (
+                                        <MenuItem key={lokaceItem} value={lokaceItem}>
+                                            {lokaceItem}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -160,7 +189,9 @@ export default function EditAd(props: Props) {
                                     sx: {
                                         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
                                         '.MuiOutlinedInput-notchedOutline': {border: 0},
-                                        borderRadius: '0', // Set border-radius to 0 for sharp edges
+                                        borderRadius: '0', // Set border-radius to 0 for sharp edges,
+                                        backdropFilter: "blur(5px)"
+
                                     },
                                 }}
                             />
@@ -179,7 +210,8 @@ export default function EditAd(props: Props) {
                                     sx: {
                                         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25)',
                                         '.MuiOutlinedInput-notchedOutline': {border: 0},
-                                        borderRadius: '0', // Set border-radius to 0 for sharp edges
+                                        borderRadius: '0', // Set border-radius to 0 for sharp edges,
+                                        backdropFilter: "blur(5px)"
                                     },
                                 }}
                             />
@@ -187,8 +219,14 @@ export default function EditAd(props: Props) {
                     </Grid>
                     <Box sx={{display: 'flex', width: '100%', justifyContent: 'end'}}>
                         <Button type="submit" variant="contained" color="primary"
-                                sx={{display: 'flex', backgroundColor: '#51B371'}}>
-                            Uložit
+                                sx={{
+                                    display: 'flex', backgroundColor: '#51B371',
+                                    color: 'white',
+                                    '&:hover': {
+                                        backgroundColor: '#3F8C5D',
+                                    },
+                                }}>
+                            Vytvořit
                         </Button>
                     </Box>
                 </form>

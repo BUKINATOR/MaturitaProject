@@ -1,17 +1,17 @@
 import {getFirestore, collection, addDoc, getDocs, query, where, getDoc, doc, deleteDoc} from "@firebase/firestore";
 import {app} from './firebase';
 import Ad from "@/types/Ad";
-import User from "@/types/User";
-import Credentials from "@/types/Credentials";
+import {User} from "@/types/User";
+import {Credentials} from "@/types/Credentials";
 
+export const firestore = getFirestore(app);
 
-const firestore = getFirestore(app);
 const collectionAds = collection(firestore, 'ads');
 const collectionUsers = collection(firestore, 'users');
 const collectionCredentials = collection(firestore, "credentials")
 
-export async function getAllAds(): Ad[] {
-    let list = []
+export async function getAllAds(): Promise<Ad[]> {
+    let list: Ad[] = []
     let snap = await getDocs(collectionAds)
     snap.forEach(ad => {
         let data = ad.data()
@@ -25,13 +25,13 @@ export async function getAllAds(): Ad[] {
             text: data.text,
             userId: data.user.id,
         }
-        list.push(a)
+        list.push(a as Ad)
     })
     return list
 }
 
-export async function getAllAdsOfUser(userid): Ad[] {
-    let list = []
+export async function getAllAdsOfUser(userid: string): Promise<Ad[]> {
+    let list: Ad[] = []
     let snap = await getDocs(query(collectionAds, where("user", "==", doc(firestore, "users", userid))))
     snap.forEach(ad => {
         let data = ad.data()
@@ -45,59 +45,75 @@ export async function getAllAdsOfUser(userid): Ad[] {
             text: data.text,
             userId: data.user.id,
         }
-        list.push(a)
+        list.push(a as Ad)
     })
     return list
 }
 
-export async function getAdByID(id): Ad {
+export async function getAdByID(id: string): Promise<Ad> {
     let docRef = doc(firestore, "ads", id);
     let snap = await getDoc(docRef)
     let data = snap.data()
-    let ad = {
-        id: snap.id,
-        category: data.category,
-        location: data.location,
-        phoneNumber: data.phoneNumber,
-        salary: data.salary,
-        section: data.section,
-        text: data.text,
-        userId: data.user.id,
+    if (data) {
+        let ad = {
+            id: snap.id,
+            category: data.category,
+            location: data.location,
+            phoneNumber: data.phoneNumber,
+            salary: data.salary,
+            section: data.section,
+            text: data.text,
+            userId: data.user.id,
+            user: doc(firestore, "users", data.user.id),  // Add this line
+        }
+        return ad;
+    } else {
+        throw new Error('Document does not exist');
     }
-    return ad;
 }
 
-export async function _getAllUsers(): User[] {
-    let list = []
+export async function _getAllUsers(): Promise<User[]> {
+    let list: User[] = []
     let snap = await getDocs(collectionUsers)
     snap.forEach(user => {
+        const userData = user.data();
         list.push(
             {
                 id: user.id,
-                ...user.data()
+                displayName: userData.displayName,
+                email: userData.email
             }
         )
     })
     return list
 }
 
-export async function getUserByID(id): User {
+export async function getUserByID(id: string): Promise<User> {
     let docRef = doc(firestore, "users", id);
     let snap = await getDoc(docRef)
-
-    return {...snap.data(), id: snap.id}
+    const data = snap.data();
+    if (data) {
+        return {
+            id: snap.id,
+            displayName: data.displayName,
+            email: data.email
+        }
+    } else {
+        throw new Error('Document does not exist');
+    }
 }
 
-export async function getCredentials(email, passwordHash): Credentials {
+export async function getCredentials(email: string, passwordHash: string): Promise<Credentials | null> {
     let snap = await getDocs(query(collectionCredentials, where("email", "==", email), where("password", "==", passwordHash)));
-    let cred = []
+    let cred: Credentials[] = [];
     snap.forEach((c) => {
         let data = c.data()
         let a = {
             id: c.id,
             email: data.email,
             password: data.password,
-            userId: data.user.id
+            userId: data.user.id,
+            user: doc(firestore, "users", data.user.id) // Add this line
         }
         cred.push(a)
     });
@@ -105,12 +121,16 @@ export async function getCredentials(email, passwordHash): Credentials {
     return cred.length > 0 ? cred[0] : null
 }
 
-export async function deleteAd(id) {
+export async function deleteAd(id: string) {
     await deleteDoc(doc(firestore, "ads", id));
 }
 
-export async function createAd(ad: Ad): Ad {
-    ad = {
+export async function createAd(ad: Ad): Promise<Ad> {
+    if (ad.userId === null) {
+        throw new Error('userId is null');
+    }
+
+    const newAd = {
         category: ad.category,
         location: ad.location,
         phoneNumber: ad.phoneNumber,
@@ -120,27 +140,33 @@ export async function createAd(ad: Ad): Ad {
         user: doc(firestore, "users", ad.userId),
     }
 
-    let docRef = await addDoc(collectionAds, ad);
+    let docRef = await addDoc(collectionAds, newAd);
 
     let snap = await getDoc(docRef)
     let data = snap.data()
-    let addata = {
-        id: snap.id,
-        category: data.category,
-        location: data.location,
-        phoneNumber: data.phoneNumber,
-        salary: data.salary,
-        section: data.section,
-        text: data.text,
-        userId: data.user.id,
+    if (data) {
+        let addata = {
+            id: snap.id,
+            category: data.category,
+            location: data.location,
+            phoneNumber: data.phoneNumber,
+            salary: data.salary,
+            section: data.section,
+            text: data.text,
+            userId: data.user.id,
+            user: doc(firestore, "users", data.user.id),  // Add this line
+        }
+        return addata;
+    } else {
+        throw new Error('Document does not exist');
     }
-    return addata;
 }
 
-export async function createCredentials(cred: Credentials): Credentials {
+export async function createCredentials(cred: Credentials): Promise<Credentials> {
     cred = {
         email: cred.email,
         password: cred.password,
+        userId: cred.userId,
         user: doc(firestore, "users", cred.userId),
     }
 
@@ -148,43 +174,49 @@ export async function createCredentials(cred: Credentials): Credentials {
 
     let snap = await getDoc(docRef)
     let data = snap.data()
-    let creddata = {
-        id: snap.id,
-        email: data.email,
-        password: data.password,
-        userId: data.user.id,
+    if (data) {
+        let creddata = {
+            id: snap.id,
+            email: data.email,
+            password: data.password,
+            userId: data.user.id,
+            user: doc(firestore, "users", data.user.id), // Add this line
+        }
+        return creddata;
+    } else {
+        throw new Error('Document does not exist');
     }
-    return creddata;
 }
 
-export async function createUser(user: User): User {
-    user = {
+export async function createUser(user: User): Promise<User | undefined> {
+    const newUser = {
         displayName: user.displayName,
         email: user.email,
     }
 
-    let docRef = await addDoc(collectionUsers, user);
+    let docRef = await addDoc(collectionUsers, newUser);
 
     let snap = await getDoc(docRef)
     let data = snap.data()
-    let userdata = {
-        id: snap.id,
-        displayName: data.displayName,
-        email: data.email,
+    if (data) {
+        let userdata = {
+            id: snap.id, // Add this line
+            displayName: data.displayName,
+            email: data.email,
+        }
+        return userdata;
     }
-    return userdata;
 }
 
-export async function getUserByEmail(email) {
+export async function getUserByEmail(email: string) {
     let snap = await getDocs(query(collectionUsers, where("email", "==", email)));
-    let user = []
+    let user: User[] = [];
     snap.forEach((c) => {
         let data = c.data()
-        let a = {
+        let a: User = {
             id: c.id,
+            displayName: data.displayName, // Add this line
             email: data.email,
-            password: data.password,
-            userId: data.user.id
         }
         user.push(a)
     });
