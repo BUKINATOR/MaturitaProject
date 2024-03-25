@@ -1,6 +1,4 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {getServerSession} from "next-auth";
-import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {createUser, createCredentials, getUserByEmail} from "@/firebase/controller";
 import {NextResponse} from "next/server";
 import {createHash} from "crypto";
