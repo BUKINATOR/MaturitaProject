@@ -34,7 +34,7 @@ interface AdsProps {
 const Myads: React.FC<AdsProps> = (props: AdsProps) => {
     const [inzeratyseznam, setInzeratySeznam] = useState<Ad[]>(props.ads);
 
-    async function handleDelete(id) {
+    async function handleDelete(id: string) {
         await fetch("/api/ad/delete", {
             method: "POST",
             body: JSON.stringify({
