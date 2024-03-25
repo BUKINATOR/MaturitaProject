@@ -27,8 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let cred = await createCredentials({
         email: email,
         password: createHash("sha256").update(password).digest("hex"),
-        userId: user.id,
-    })
+        userId: user.id || "",
+        user: userRef,
+    });
 
     res.status(200).json({message: 'ok'})
 }
