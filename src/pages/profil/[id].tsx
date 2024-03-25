@@ -1,16 +1,31 @@
 // pages/profil/[id].tsx
 import React from 'react';
-import { useRouter } from 'next/router';
 import UserProfile from '../../components/UserProfile';
+import {getUserByID} from "@/firebase/controller";
+import {User} from "@/types/User";
+import {GetServerSidePropsContext} from 'next';
 
-const ProfileDetailPage = () => {
-    const router = useRouter();
-    const { id } = router.query;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const {id} = context.query;
 
+    if (typeof id !== 'string') {
+        return {
+            notFound: true,
+        };
+    }
+
+    let user = await getUserByID(id)
+    return {props: {user: user}};
+}
+
+interface Props {
+    user: User
+}
+
+const ProfileDetailPage = (props: Props) => {
     return (
         <div>
-            <h1>User Profile</h1>
-            {id && <UserProfile userId={id} />}
+            {props.user && <UserProfile user={props.user}/>}
         </div>
     );
 };
